@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course Application Form</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div class="card">
+  <header><h1>Course Application Form</h1><p>Fill in your details to apply for admission.</p></header>
+
+  <form id="f" action="submit.php" method="post" novalidate>
+    <div class="row">
+      <div><label for="name">Full name</label><input type="text" id="name" name="name"><div class="err"></div></div>
+      <div><label for="dob">Date of birth</label><input type="date" id="dob" name="dob"><div class="err"></div></div>
+      <div><label for="email">Email</label><input type="email" id="email" name="email"><div class="err"></div></div>
+      <div><label for="phone">Phone (10 digits)</label><input type="tel" id="phone" name="phone"><div class="err"></div></div>
+    </div>
+
+    <div class="lbl">Gender</div>
+    <div class="opt">
+      <label><input type="radio" name="gender" value="Female"> Female</label>
+      <label><input type="radio" name="gender" value="Male"> Male</label>
+      <label><input type="radio" name="gender" value="Other"> Other</label>
+    </div><div class="err"></div>
+
+    <label for="course">Course applying for</label>
+    <select id="course" name="course">
+      <option value="">-- Select course --</option>
+      <option>B.E. Computer Science</option><option>B.E. Information Science</option>
+      <option>B.E. Electronics &amp; Communication</option><option>B.E. Mechanical</option>
+    </select><div class="err"></div>
+
+    <div class="lbl">Interests</div>
+    <div class="opt">
+      <label><input type="checkbox" name="interests[]" value="Coding"> Coding</label>
+      <label><input type="checkbox" name="interests[]" value="Robotics"> Robotics</label>
+      <label><input type="checkbox" name="interests[]" value="Design"> Design</label>
+      <label><input type="checkbox" name="interests[]" value="Research"> Research</label>
+    </div>
+
+    <label for="address">Address</label>
+    <textarea id="address" name="address" rows="3"></textarea><div class="err"></div>
+
+    <button type="submit">Submit Application</button>
+  </form>
+</div>
+
+<script>
+  // JavaScript: no future birth dates
+  document.getElementById("dob").max = new Date().toISOString().split("T")[0];
+
+  // jQuery: validate every field before the form is allowed to reach PHP
+  const rules = {
+    name:    [v => v.trim().length >= 3,          "Enter at least 3 characters"],
+    dob:     [v => v !== "",                      "Pick your date of birth"],
+    email:   [v => /^\S+@\S+\.\S+$/.test(v),      "Enter a valid email"],
+    phone:   [v => /^\d{10}$/.test(v),            "Phone must be 10 digits"],
+    course:  [v => v !== "",                      "Select a course"],
+    address: [v => v.trim().length >= 10,         "Enter at least 10 characters"]
+  };
+
+  $("#f").on("submit", function (e) {
+    let ok = true;
+    $(".err").text(""); $(".bad").removeClass("bad");
+
+    $.each(rules, (field, [test, msg]) => {
+      const $i = $("[name=" + field + "]");
+      if (!test($i.val())) { $i.addClass("bad").next(".err").text(msg); ok = false; }
+    });
+    if (!$("[name=gender]:checked").length) { $(".opt").first().next().text("Select a gender"); ok = false; }
+
+    if (!ok) e.preventDefault();
+  });
+
+  // clear a field's error as soon as the user edits it
+  $("input, select, textarea").on("input change", function () { $(this).removeClass("bad").next(".err").text(""); });
+</script>
+</body>
+</html>

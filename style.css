@@ -1,0 +1,27 @@
+:root { --p: #4f46e5; --bg: #eef0ff; --line: #d9dcf5; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; padding: 32px 16px; font: 16px/1.5 "Segoe UI", Arial, sans-serif;
+       background: linear-gradient(135deg, #e0e7ff, #fce7f3); color: #1f2340; }
+.card { max-width: 680px; margin: auto; background: #fff; border-radius: 16px; overflow: hidden;
+        box-shadow: 0 12px 32px rgba(79, 70, 229, .15); }
+header { padding: 26px 32px; color: #fff; background: linear-gradient(135deg, #4f46e5, #9333ea); }
+header h1 { margin: 0; font-size: 1.6rem; }
+header p { margin: 4px 0 0; opacity: .85; }
+form, .body { padding: 24px 32px 32px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+label, .lbl { display: block; margin: 16px 0 5px; font-weight: 600; font-size: .9rem; }
+input[type=text], input[type=email], input[type=tel], input[type=date], select, textarea {
+  width: 100%; padding: 10px 12px; font: inherit; border: 1px solid var(--line); border-radius: 8px; }
+input:focus, select:focus, textarea:focus { outline: 0; border-color: var(--p); box-shadow: 0 0 0 3px #4f46e533; }
+.opt label { display: inline-flex; gap: 6px; margin: 0 16px 0 0; font-weight: 400; }
+.err { color: #dc2626; font-size: .8rem; min-height: 1em; }
+input.bad, select.bad, textarea.bad { border-color: #dc2626; }
+button, .btn { display: block; width: 100%; margin-top: 22px; padding: 12px; border: 0; border-radius: 8px; text-align: center;
+  font: 600 1rem inherit; color: #fff; background: var(--p); cursor: pointer; text-decoration: none; transition: .2s; }
+button:hover, .btn:hover { background: #3730a3; transform: translateY(-1px); }
+.ok { padding: 12px 16px; margin-bottom: 18px; border-radius: 8px; color: #166534; background: #dcfce7; font-weight: 600; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 11px 8px; text-align: left; border-bottom: 1px solid var(--bg); vertical-align: top; }
+th { width: 36%; color: var(--p); font-weight: 600; }
+@media (max-width: 560px) { .row { grid-template-columns: 1fr; } form, .body { padding: 20px; } }
+@media print { body { background: #fff; } .card { box-shadow: none; } .btn, button { display: none; } }
